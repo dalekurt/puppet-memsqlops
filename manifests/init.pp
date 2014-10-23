@@ -1,4 +1,4 @@
-# == Class: memsql-ops
+# == Class: memsqlops
 #
 # Install memSQL Ops.
 #
@@ -10,23 +10,23 @@
 # [*license*]
 #   License provided by memsql.
 #
-# [*memsql-ops_src_dir*]
+# [*memsqlops_src_dir*]
 #   Location to unpack source code before building and installing it.
-#   Default: /opt/memsql-ops-src
+#   Default: /opt/memsqlops-src
 #
-# [*memsql-ops_bin_dir*]
-#   Location to install memsql-ops binaries.
-#   Default: /opt/memsql-ops
+# [*memsqlops_bin_dir*]
+#   Location to install memsqlops binaries.
+#   Default: /opt/memsqlops
 #
 # === Examples
 #
-# include memsql-ops
+# include memsqlops
 #
-# class { 'memsql-ops':
+# class { 'memsqlops':
 #   version        => '3.1.2',
 #   license        => 'LICENSE_KEY'
-#   memsql-ops_src_dir => '/path/to/memsql-ops-src',
-#   memsql-ops_bin_dir => '/path/to/memsql-ops',
+#   memsqlops_src_dir => '/path/to/memsqlops-src',
+#   memsqlops_bin_dir => '/path/to/memsqlops',
 # }
 #
 # === Authors
@@ -39,71 +39,71 @@
 #
 
 # Install memSQL from tarball file
-class memsql-ops (
-  $version                = $memsql-ops::params::version,
-  $license                = $memsql-ops::params::license,
-  $memsql-ops_src_dir     = $memsql-ops::params::memsql-ops_src_dir,
-  $memsql-ops_bin_dir     = $memsql-ops::params::memsql-ops_bin_dir,
-  $memsql-ops_dbhost      = $memsql-ops::params::memsql-ops_dbhost,
-  $memsql-ops_dbport      = $memsql-ops::params::memsql-ops_dbport,
-  $memsql-ops_dbuser      = $memsql-ops::params::memsql-ops_dbuser,
-  $memsql-ops_dbpass      = $memsql-ops::params::memsql-ops_dbpass,
-  $memsql-ops_dbname      = $memsql-ops::params::memsql-ops_dbname,
-  $memsql-ops_bindaddress = $memsql-ops::params::memsql-ops_bindaddress,
-  $memsql-ops_port        = $memsql-ops::params::memsql-ops_port
+class memsqlops (
+  $version                = $memsqlops::params::version,
+  $license                = $memsqlops::params::license,
+  $memsqlops_src_dir     = $memsqlops::params::memsqlops_src_dir,
+  $memsqlops_bin_dir     = $memsqlops::params::memsqlops_bin_dir,
+  $memsqlops_dbhost      = $memsqlops::params::memsqlops_dbhost,
+  $memsqlops_dbport      = $memsqlops::params::memsqlops_dbport,
+  $memsqlops_dbuser      = $memsqlops::params::memsqlops_dbuser,
+  $memsqlops_dbpass      = $memsqlops::params::memsqlops_dbpass,
+  $memsqlops_dbname      = $memsqlops::params::memsqlops_dbname,
+  $memsqlops_bindaddress = $memsqlops::params::memsqlops_bindaddress,
+  $memsqlops_port        = $memsqlops::params::memsqlops_port
 
-) inherits memsql-ops::params {
+) inherits memsqlops::params {
 
   include wget
   include gcc
 
-  $memsql-ops_pkg_name = 'memsql-ops-${version}.tar.gz'
-  $memsql-ops_pkg      = '${memsql-ops_src_dir}/${memsql-ops_pkg_name}'
+  $memsqlops_pkg_name = 'memsqlops-${version}.tar.gz'
+  $memsqlops_pkg      = '${memsqlops_src_dir}/${memsqlops_pkg_name}'
 
-  memsql-ops::instance { 'memsql-ops-default':
-    memsql-ops_bindaddress => $memsql-ops_bindaddress,
-    memsql-ops_port        => $memsql-ops_port,
-    memsql-ops_dbhost      => $memsql-ops_dbhost,
-    memsql-ops_dbport      => $memsql-ops_dbport,
-    memsql-ops_dbuser      => $memsql-ops_dbuser,
-    memsql-ops_dbpass      => $memsql-ops_dbpass,
-    memsql-ops_dbname      => $memsql-ops_dbname,
+  memsqlops::instance { 'memsqlops-default':
+    memsqlops_bindaddress => $memsqlops_bindaddress,
+    memsqlops_port        => $memsqlops_port,
+    memsqlops_dbhost      => $memsqlops_dbhost,
+    memsqlops_dbport      => $memsqlops_dbport,
+    memsqlops_dbuser      => $memsqlops_dbuser,
+    memsqlops_dbpass      => $memsqlops_dbpass,
+    memsqlops_dbname      => $memsqlops_dbname,
 
   }
 
   # download memsql from the memsql.com website
-  exec { 'get-memsql-ops-pkg':
-    command => "wget http://download.memsql.com/${license}/${memsql-ops_pkg_name}",
-    cwd     => $memsql-ops_src_dir,
+  exec { 'get-memsqlops-pkg':
+    command => "wget http://download.memsql.com/${license}/${memsqlops_pkg_name}",
+    cwd     => $memsqlops_src_dir,
     path    => "/usr/bin",
-    unless  => "test -f ${memsql-ops_pkg}",
-    require => File[$memsql-ops_src_dir],
+    unless  => "test -f ${memsqlops_pkg}",
+    require => File[$memsqlops_src_dir],
   }
 
-  # extract memsql-ops to the memsql-ops_bin_dir
-  exec { 'unpack-memsql-ops':
-    command => "tar --strip-components 1 -xzf ${memsql-ops_pkg}",
-    cwd     => $memsql-ops_bin_dir,
+  # extract memsqlops to the memsqlops_bin_dir
+  exec { 'unpack-memsqlops':
+    command => "tar --strip-components 1 -xzf ${memsqlops_pkg}",
+    cwd     => $memsqlops_bin_dir,
     path    => '/bin:/usr/bin',
-    unless  => "test -f ${memsql-ops_src_dir}/Makefile",
-    subscribe => [ Exec['get-memsql-ops-pkg'], File[ $memsql-ops_bin_dir] ],
+    unless  => "test -f ${memsqlops_src_dir}/Makefile",
+    subscribe => [ Exec['get-memsqlops-pkg'], File[ $memsqlops_bin_dir] ],
     refreshonly => true,
   }
 
   # create the memsql init script
-  file { "memsql-ops-init":
+  file { "memsqlops-init":
     ensure  => present,
-    path    => "/etc/init.d/memsql-ops",
+    path    => "/etc/init.d/memsqlops",
     mode    => '0755',
-    content => template('memsql/memsql-ops.init.erb'),
-    notify  => [ Service["memsql-ops"] ],
+    content => template('memsql/memsqlops.init.erb'),
+    notify  => [ Service["memsqlops"] ],
   }
 
   # start the memsql daemon using the init script
-  service { "memsql-ops":
+  service { "memsqlops":
     ensure    => running,
-    name      => "memsql-ops",
+    name      => "memsqlops",
     enable    => true,
-    require   => [ File['memsql-ops-init'], Exec['get-memsql-ops-pkg'], Exec['unpack-memsql-ops'] ],
+    require   => [ File['memsqlops-init'], Exec['get-memsqlops-pkg'], Exec['unpack-memsqlops'] ],
   }
 }

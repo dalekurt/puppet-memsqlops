@@ -1,0 +1,66 @@
+[cluster]
+; connection information for the MemSQL Master Aggregator
+db_host: <%= scope.lookupvar('memsql-ops::memsql-ops_dbhost') %>
+db_port: <%= scope.lookupvar('memsql-ops::memsql-ops_dbport') %>
+db_user: <%= scope.lookupvar('memsql-ops::memsql-ops_dbport') %>
+db_pass: <%= scope.lookupvar('memsql-ops::memsql-ops_dbpass') %>
+
+[database]
+; connection information for the MemSQL Ops database
+db_host: <%= scope.lookupvar('memsql-ops::memsql-ops_dbhost') %>
+db_port: <%= scope.lookupvar('memsql-ops::memsql-ops_dbport') %>
+db_name: <%= scope.lookupvar('memsql-ops::memsql-ops_dbname') %>
+db_user: <%= scope.lookupvar('memsql-ops::memsql-ops_dbuser') %>
+db_pass: <%= scope.lookupvar('memsql-ops::memsql-ops_dbpass') %>
+
+[analytics]
+; how many hours of analytics data should be kept?
+retention: .5
+; how many hours of event data should be kept?
+events_retention: .5
+; how many hours of facts data should be kept?
+facts_retention: .5
+
+; if you set a collectd prefix in the memsql-collectd plugin
+; set it here as well:
+; collectd_prefix: system
+
+[healthchecks]
+; thresholds for memory / skew warnings
+memory_max: 90
+
+; Only throw a warning if the database has a minimum size and # of rows.
+; skew_max is in percentage points of the relative standard deviation.
+skew_max: 10
+skew_min_rows: 10000000
+skew_min_bytes: 10000000000
+
+[http]
+host: <%= scope.lookupvar('memsql-ops::memsql-ops_bindaddress') %>
+port: <%= scope.lookupvar('memsql-ops::memsql-ops_port') %>
+
+[global]
+debug: false
+verbose_errors: false
+
+[features]
+; Controls the amount of active scanning of the cluster for column and table statistics.
+; 0 (default): no active scanning, uses built-in approximations
+; 1: partial active scanning (requires read access to cluster)
+stats_scan_level: 0
+
+; How often to run the column scanner, in seconds.
+stats_scan_interval: 60
+
+; Record row counts and table sizes to the analytics table
+tablestats_charting: true
+
+; Record per-table insert/update/delete counters to the analytics table
+querystats_charting: true
+
+[garbage_collection]
+gc_interval: 3
+gc_batch_size: 10000
+queries_retention: 24
+query_stats_retention: 6
+log_retention: 24

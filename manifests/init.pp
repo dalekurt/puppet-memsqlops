@@ -60,16 +60,15 @@ class memsqlops (
   $memsqlops_pkg_name = 'memsqlops-${version}.tar.gz'
   $memsqlops_pkg      = '${memsqlops_src_dir}/${memsqlops_pkg_name}'
 
-  memsqlops::instance { 'memsqlops-default':
-    memsqlops_bindaddress => $memsqlops_bindaddress,
-    memsqlops_port        => $memsqlops_port,
-    memsqlops_dbhost      => $memsqlops_dbhost,
-    memsqlops_dbport      => $memsqlops_dbport,
-    memsqlops_dbuser      => $memsqlops_dbuser,
-    memsqlops_dbpass      => $memsqlops_dbpass,
-    memsqlops_dbname      => $memsqlops_dbname,
-
-  }
+#  memsqlops::instance { 'memsqlops-default':
+#    memsqlops_bindaddress => $memsqlops_bindaddress,
+#    memsqlops_port        => $memsqlops_port,
+#    memsqlops_dbhost      => $memsqlops_dbhost,
+#    memsqlops_dbport      => $memsqlops_dbport,
+#    memsqlops_dbuser      => $memsqlops_dbuser,
+#    memsqlops_dbpass      => $memsqlops_dbpass,
+#    memsqlops_dbname      => $memsqlops_dbname,
+#  }
 
   # download memsql from the memsql.com website
   exec { 'get-memsqlops-pkg':

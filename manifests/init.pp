@@ -94,7 +94,7 @@ class memsqlops (
     ensure  => present,
     path    => "/etc/init.d/memsqlops",
     mode    => '0755',
-    content => template('memsql/memsqlops.init.erb'),
+    content => template('memsqlops/memsqlops.init.erb'),
     notify  => [ Service["memsqlops"] ],
   }
 

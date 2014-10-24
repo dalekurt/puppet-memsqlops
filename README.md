@@ -5,7 +5,7 @@ Install and configure memSQL Ops.
 # Usage
 
 ```puppet
-include memsql-ops
+include memsqlops
 ```
 
 This module has been tested on:

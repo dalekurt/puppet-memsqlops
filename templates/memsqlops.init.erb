@@ -1,23 +1,23 @@
 #!/bin/bash
 #
-# memsql-ops       MemSQL Ops
+# memsqlops       MemSQL Ops
 #
 # chkconfig:   2345 80 30
 # description: MemSQL Ops is the real-time analytics solution for machine and application data
 
 ### BEGIN INIT INFO
-# Provides: memsql-ops
+# Provides: memsqlops
 # Required-Start: $local_fs $network
 # Required-Stop: $local_fs $network
 # Default-Start: 2 3 4 5
 # Default-Stop: 0 1 6
-# Short-Description: start and stop memsql-ops
+# Short-Description: start and stop memsqlops
 # Description: MemSQL Ops is the real-time analytics solution for machine and application data
 ### END INIT INFO
 
-BASE_PATH="<%= scope.lookupvar('memsql::memsql-ops_bin_dir') %>
+BASE_PATH="<%= scope.lookupvar('memsqlops::memsqlops_bin_dir') %>
 SERVICE_PATH="$BASE_PATH/service"
-USER="<%= scope.lookupvar('memsql-ops::memsql-ops_user') %>"
+USER="<%= scope.lookupvar('memsqlops::memsqlops_user') %>"
 
 # Load our function library
 source "$SERVICE_PATH"
